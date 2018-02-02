@@ -9,72 +9,70 @@
 
     */
 
-    var scores, roundScore, activePlayer;
+    var scores, roundScore, activePlayer, gamePlaying;
 
     init();
 
 
     document.querySelector('.btn-roll').addEventListener('click', function() {
+            // Se o jogo estiver no estado de jogar (true) então segue
+            if(gamePlaying){
+               
+                // Random number 1-6
+                var dice = Math.floor(Math.random() * 6) + 1;
 
-            // Random number 1-6
-            var dice = Math.floor(Math.random() * 6) + 1;
-
-            // Display the result
-            var diceDOM = document.querySelector('.dice');
+                // Display the result
+                var diceDOM = document.querySelector('.dice');
 
 
 
-            // Gif de rodar os dados/explosao
-            show();
-            function show() {
-                if(dice == 1){
-                    diceDOM.src = 'explosao.gif';
-                }else{
-                    diceDOM.src = 'giphy.gif';
-                }
-                
-                
+                // Gif de rodar os dados/explosao
+                show();
+                function show() {
+                    if(dice == 1){
+                        diceDOM.src = 'explosao.gif';
+                    }else{
+                        diceDOM.src = 'giphy.gif';
+                    }
+
+
                 diceDOM.style.display='block';
-                
+
+                // Quando passar 1 segundo chama a função 'hide'
                 setTimeout(hide, 1000);  // 3 seconds
-            }
-
-            function hide() {
-
-                diceDOM.src = 'dice-'+ dice + '.png';
-                // Update round score (only if the random number is not 1)
-                // !== não faz type cohersion, podem ser de tipos diferentes
-                if(dice !== 1 ){
-                    roundScore += dice;
-                    document.getElementById('current-' + activePlayer).textContent =roundScore;
-
-                }else{
-                    
-                    
-                    //diceDOM.style.display = 'block';
-                    // RoundScore passa a zero , porque lhe saíu 1 nos dados
-                    roundScore = 0;
-                    // Display de 0 no Ronda do activePlayer
-                    document.getElementById('current-' + activePlayer).textContent = '0';
-                    
-                    
-                    nextPlayer();
-                    
-
-
                 }
+
+                function hide() {
+
+                    diceDOM.src = 'dice-'+ dice + '.png';
+                    // Update ao roundScore só se o numero que saiu nao é 1...
+                    // !== não faz type cohersion, podem ser de tipos diferentes
+                    if(dice !== 1 ){
+                        roundScore += dice;
+                        document.getElementById('current-' + activePlayer).textContent =roundScore;
+
+                    }else{
+                        // RoundScore passa a zero , porque lhe saíu 1 nos dados
+                        roundScore = 0;
+                        // Display de 0 no Ronda do activePlayer
+                        document.getElementById('current-' + activePlayer).textContent = '0';
+
+
+                        nextPlayer();
+
+
+
+                    }
+                }
+
             }
-
-
-
-
     });
 
         document.querySelector('.btn-hold').addEventListener('click', function(){
-
-
+                
+            if(gamePlaying){
                 scores[activePlayer] += roundScore;
-                if(scores[activePlayer] >= 20){
+                if(scores[activePlayer] >= 100){
                     document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
                     document.getElementById('name-'+activePlayer).textContent = 'Ganhou !'
                     // Esconde dado
@@ -82,16 +80,16 @@
                     // Aplica a classe winner do css, e remove a classe active 
                     document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
                     document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active');
-                    // Esconde Butoes e rondas
-                    document.querySelector('.btn-roll').style.display = 'none';
-                    document.querySelector('.btn-hold').style.display = 'none';
+                    // Mudar o estado do jogo para falso
+                    gamePlaying = false;
+                    
                     
                 }else{
                     document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
                     nextPlayer();
                 }
                 
-
+            }
 
 
 
@@ -126,6 +124,7 @@
             scores = [0,0];
             roundScore = 0;
             activePlayer = 0; // 0 -> player1 1 -> player2
+            gamePlaying = true;
             
             // Reset do display das variaveis
             document.getElementById('score-0').textContent = '0';
@@ -137,10 +136,13 @@
             document.getElementById('name-0').textContent = 'Player 1';
             document.getElementById('name-1').textContent = 'Player 2';
             
-            // Set buttons to visible
-            document.querySelector('.btn-roll').style.display = 'block';
-            document.querySelector('.btn-hold').style.display = 'block';
+            
 
+            // Remover classes de winners e active players
+            document.querySelector('.player-0-panel').classList.remove('winner');
+            document.querySelector('.player-1-panel').classList.remove('winner');
+            document.querySelector('.player-0-panel').classList.add('active'); // Quando começa o active player é o 1...
+            document.querySelector('.player-1-panel').classList.remove('active');
 
             // Se quisesse acrescentar codigo html...
                 // document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
