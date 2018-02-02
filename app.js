@@ -75,6 +75,7 @@
 
                 scores[activePlayer] += roundScore;
                 if(scores[activePlayer] >= 20){
+                    document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
                     document.getElementById('name-'+activePlayer).textContent = 'Ganhou !'
                     // Esconde dado
                     document.querySelector('.dice').style.display = 'none';
@@ -121,15 +122,24 @@
 
         function init(){
             
+            // Reset das variaveis de jogo
             scores = [0,0];
             roundScore = 0;
             activePlayer = 0; // 0 -> player1 1 -> player2
-
+            
+            // Reset do display das variaveis
             document.getElementById('score-0').textContent = '0';
             document.getElementById('score-1').textContent = '0';
             document.getElementById('current-0').textContent = '0';
             document.getElementById('current-1').textContent = '0';
-
+            
+            // Set players name
+            document.getElementById('name-0').textContent = 'Player 1';
+            document.getElementById('name-1').textContent = 'Player 2';
+            
+            // Set buttons to visible
+            document.querySelector('.btn-roll').style.display = 'block';
+            document.querySelector('.btn-hold').style.display = 'block';
 
 
             // Se quisesse acrescentar codigo html...
@@ -145,10 +155,7 @@
             
         };
 
-        document.querySelector('.btn-new').addEventListener('click', function() {
-          
-           init();
-        });
+        document.querySelector('.btn-new').addEventListener('click', init);
 
 
 
