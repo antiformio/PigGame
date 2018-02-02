@@ -35,6 +35,7 @@
                 
                 
                 diceDOM.style.display='block';
+                
                 setTimeout(hide, 1000);  // 3 seconds
             }
 
