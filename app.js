@@ -9,7 +9,7 @@
 
     */
 
-    var scores, roundScore, activePlayer, gamePlaying;
+    var scores, roundScore, activePlayer, gamePlaying, maxScore;
 
     init();
 
@@ -72,7 +72,7 @@
                 
             if(gamePlaying){
                 scores[activePlayer] += roundScore;
-                if(scores[activePlayer] >= 100){
+                if(scores[activePlayer] >= maxScore){
                     document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
                     document.getElementById('name-'+activePlayer).textContent = 'Ganhou !'
                     // Esconde dado
@@ -125,6 +125,7 @@
             roundScore = 0;
             activePlayer = 0; // 0 -> player1 1 -> player2
             gamePlaying = true;
+            maxScore = prompt('Introduza o score máximo');
             
             // Reset do display das variaveis
             document.getElementById('score-0').textContent = '0';
