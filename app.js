@@ -80,7 +80,17 @@
                 
             if(gamePlaying){
                 scores[activePlayer] += roundScore;
-                if(scores[activePlayer] >= maxScore){
+                var input = document.querySelector('.final-score').value;
+                var winningScore;
+                // Se for undefined, 0, null ou "", então dá falso
+                // se não for, da true.
+                if(input){
+                     winningScore = input;
+                }else{
+                    // Se não for definido fica 100;
+                    winningScore = 100;
+                }
+                if(scores[activePlayer] >= input){
                     document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
                     document.getElementById('name-'+activePlayer).textContent = 'Ganhou !'
                     // Esconde dado
@@ -135,7 +145,7 @@
             roundScore = 0;
             activePlayer = 0; // 0 -> player1 1 -> player2
             gamePlaying = true;
-            maxScore = prompt('Introduza o score máximo');
+            
             
             // Reset do display das variaveis
             document.getElementById('score-0').textContent = '0';
