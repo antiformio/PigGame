@@ -20,9 +20,11 @@
                
                 // Random number 1-6
                 var dice = Math.floor(Math.random() * 6) + 1;
+                var dice2 = Math.floor(Math.random() * 6) + 1;
 
                 // Display the result
                 var diceDOM = document.querySelector('.dice');
+                var diceDOM2 = document.querySelector('.dice2'); 
 
 
 
@@ -31,12 +33,17 @@
                 function show() {
                     if(dice == 1){
                         diceDOM.src = 'explosao.gif';
+                    }else if(dice2 == 1){
+                        diceDOM2.src = 'explosao.gif';
+                        
                     }else{
                         diceDOM.src = 'giphy.gif';
+                        diceDOM2.src = 'giphy2.gif';
                     }
 
 
                 diceDOM.style.display='block';
+                diceDOM2.style.display='block';
 
                 // Quando passar 1 segundo chama a função 'hide'
                 setTimeout(hide, 1000);  // 3 seconds
@@ -45,10 +52,11 @@
                 function hide() {
 
                     diceDOM.src = 'dice-'+ dice + '.png';
+                    diceDOM2.src = 'dice-'+ dice2 + '.png';
                     // Update ao roundScore só se o numero que saiu nao é 1...
                     // !== não faz type cohersion, podem ser de tipos diferentes
-                    if(dice !== 1 ){
-                        roundScore += dice;
+                    if(dice !== 1 && dice2 !== 1){
+                        roundScore += dice + dice2;
                         document.getElementById('current-' + activePlayer).textContent =roundScore;
 
                     }else{
@@ -77,6 +85,7 @@
                     document.getElementById('name-'+activePlayer).textContent = 'Ganhou !'
                     // Esconde dado
                     document.querySelector('.dice').style.display = 'none';
+                    document.querySelector('.dice2').style.display = 'none';
                     // Aplica a classe winner do css, e remove a classe active 
                     document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
                     document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active');
@@ -111,6 +120,7 @@
 
                         // Esconder o dado no final
                         document.querySelector('.dice').style.display = 'none';
+                        document.querySelector('.dice2').style.display = 'none';
                         roundScore= 0;
                         document.getElementById('current-'+activePlayer).textContent = 0;
                         activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
@@ -155,6 +165,7 @@
                 // Esconder uma imagem
                 // O querySelector aqui vai buscar a classe da imagem, ou seja '.dice' depois aceder à propriedade display e mudar para none
             document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.dice2').style.display = 'none';
             
         };
 
